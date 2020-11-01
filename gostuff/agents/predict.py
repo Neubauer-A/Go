@@ -6,6 +6,8 @@ from gostuff.encoders.base import get_encoder_by_name
 from gostuff import goboard
 from gostuff import kerasutil
 
+# Source: https://github.com/maxpumperla/deep_learning_and_the_game_of_go/blob/master/code/dlgo/agent/predict.py
+
 __all__ = [
     'DeepLearningAgent',
     'load_prediction_agent',
