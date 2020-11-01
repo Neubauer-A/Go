@@ -3,6 +3,8 @@ from gostuff.agents.base import Agent
 from gostuff import scoring
 from gostuff.gotypes import Player
 
+# Adapted from https://github.com/maxpumperla/deep_learning_and_the_game_of_go/blob/master/code/dlgo/agent/termination.py
+
 class TerminationStrategy:
 
     def __init__(self):
