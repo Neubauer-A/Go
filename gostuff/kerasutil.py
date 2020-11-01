@@ -6,6 +6,8 @@ import h5py
 import keras
 from keras.models import load_model, save_model
 
+# Source: https://github.com/maxpumperla/deep_learning_and_the_game_of_go/blob/master/code/dlgo/kerasutil.py
+
 def save_model_to_hdf5_group(model, f):
     # Use Keras save_model to save the full model (including optimizer
     # state) to a file.
