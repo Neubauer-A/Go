@@ -1,7 +1,8 @@
 from __future__ import absolute_import
 from collections import namedtuple
-
 from gostuff.gotypes import Player, Point
+
+# Adapted from https://github.com/maxpumperla/deep_learning_and_the_game_of_go/blob/master/code/dlgo/scoring.py
 
 class Territory:
     def __init__(self, territory_map):  # <1>
