@@ -1,5 +1,7 @@
 from gostuff.gotypes import Point
 
+# Adapted from https://github.com/maxpumperla/deep_learning_and_the_game_of_go/blob/master/code/dlgo/agent/helpers_fast.py
+
 __all__ = [
     'is_point_an_eye',
 ]
