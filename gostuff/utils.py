@@ -3,6 +3,9 @@ import subprocess
 import numpy as np
 from gostuff import gotypes
 
+# Adapted from https://github.com/maxpumperla/deep_learning_and_the_game_of_go/blob/master/code/dlgo/utils.py
+
+# Stdout representations
 COLS = 'ABCDEFGHJKLMNOPQRST'
 STONE_TO_CHAR = {
     None: ' . ',
@@ -40,18 +43,19 @@ def coords_from_point(point):
         point.row
     )
 
+# Array of the order in which stones have been played. 
 class MoveAge():
     def __init__(self, board):
         self.move_ages = np.zeros((board.num_rows, board.num_cols))
 
     def get(self, row, col):
+        # Age of specific point.
         return self.move_ages[row, col]
 
     def reset_age(self, point):
+        # Stone removed.
         self.move_ages[point.row - 1, point.col - 1] = 0
 
     def add(self, point):
+        # New stone.
         self.move_ages[point.row - 1, point.col - 1] = 1
-
-    def increment_all(self):
-        self.move_ages[self.move_ages > 0] += 1
