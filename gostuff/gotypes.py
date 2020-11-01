@@ -1,6 +1,8 @@
 import enum
 from collections import namedtuple
 
+# Source: https://github.com/maxpumperla/deep_learning_and_the_game_of_go/blob/master/code/dlgo/gotypes.py
+
 __all__ = [
     'Player',
     'Point',
