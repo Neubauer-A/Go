@@ -16,8 +16,8 @@ from gostuff.data.sgf_index import SGFIndex
 
 def worker(jobinfo):
     try:
-        clazz, encoder, filename = jobinfo
-        features, labels = clazz(encoder=encoder).process(filename)
+        clazz, size, encoder, filename = jobinfo
+        features, labels = clazz(size=size, encoder=encoder).process(filename)
         return [features, labels]
     except (KeyboardInterrupt, SystemExit):
         raise Exception('>>> Exiting child process.')
@@ -25,18 +25,21 @@ def worker(jobinfo):
         pass
 
 class GoProcessor:
-    def __init__(self, encoder='gogoboi', record_directory='/records'):
+    def __init__(self, size=19, encoder='gogoboi', record_directory='/records'):
+        self.size = size
         self.encoder_string = encoder
-        self.encoder = get_encoder_by_name(encoder, 19)
+        self.encoder = get_encoder_by_name(encoder, self.size)
         self.record_dir = record_directory
         self.used_games = []
 
     def prep_data(self, data_type='train', num_samples=1000):
-        index = SGFIndex()
+        index = SGFIndex(self.size)
         if not os.path.isdir(index.raw_dir):
             index.download()
         index.create_index()
 
+        if num_samples > len(index.index):
+            num_samples = len(index.index)
         total = num_samples
         while total != 0:
             if total > 200:
@@ -61,7 +64,7 @@ class GoProcessor:
     def map_to_workers(self, data, data_type):
         jobs = []
         for filename in data:
-            jobs.append((self.__class__, self.encoder_string, filename))
+            jobs.append((self.__class__, self.size, self.encoder_string, filename))
 
         cores = mp.cpu_count()  
         pool = mp.Pool(processes=cores)
@@ -122,7 +125,7 @@ class GoProcessor:
                 game_state = game_state.apply_move(move)
                 first_move_done = True
 
-        labels = to_categorical(labels.astype(int), 19 * 19)
+        labels = to_categorical(labels.astype(int), self.size * self.size)
         print(choice(['done', 'done!', 'done!!!'])) # Make sure SOMETHING is happening.
         return features, labels
 
@@ -201,5 +204,5 @@ class GoProcessor:
         feature = tf.ensure_shape(tf.io.parse_tensor(example['feature'], 
                                                      out_type='float32'), 
                                                     [self.encoder.shape()[0],self.encoder.shape()[1],self.encoder.shape()[2]])
-        label = tf.ensure_shape(tf.io.parse_tensor(example['label'], out_type='int64'), [361])
+        label = tf.ensure_shape(tf.io.parse_tensor(example['label'], out_type='int64'), [int(self.size*self.size)])
         return feature, label
