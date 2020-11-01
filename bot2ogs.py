@@ -2,6 +2,7 @@ import os
 import sys
 from argparse import ArgumentParser
 
+# Connects a GTP bot to OGS
 
 parser = ArgumentParser()
 parser.add_argument('--apikey', type=str, required=True)
