@@ -15,7 +15,7 @@ from math import isinf, isnan
 
 import six
 
-from dlgo.gosgf import sgf_grammar
+from gostuff.gosgf import sgf_grammar
 from six.moves import range
 
 # In python 2, indexing a str gives one-character strings.
