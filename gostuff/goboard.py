@@ -4,6 +4,8 @@ from gostuff.scoring import compute_game_result
 from gostuff import zobrist
 from gostuff.utils import MoveAge
 
+# Adapted from https://github.com/maxpumperla/deep_learning_and_the_game_of_go/blob/master/code/dlgo/goboard_fast.py
+
 __all__ = [
     'Board',
     'GameState',
