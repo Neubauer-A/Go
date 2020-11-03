@@ -105,7 +105,7 @@ class GoProcessor:
         sgf_content = sgf.read()
         sgf.close()
         sgf = Sgf_game.from_string(sgf_content)
-        game_state = GameState.new_game(19)
+        game_state = GameState.new_game(self.size)
         first_move_done = False
 
         for item in sgf.main_sequence_iter():
