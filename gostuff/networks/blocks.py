@@ -52,7 +52,7 @@ def residual_block(block_num):
     def f(inputs):
         res = conv_block(activation=True)(inputs)
         res = conv_block(activation=False)(res)
-        add = add([inputs, res])
+        add = Add()([inputs, res])
         return LeakyReLU()(add)
     return f
 
